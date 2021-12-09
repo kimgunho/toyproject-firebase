@@ -1,5 +1,9 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, BrowserRouter, Routes, Route } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+
+import { auth } from './firebase';
 
 import Home from './pages/Home';
 import LoginForm from './pages/LoginForm';
@@ -19,7 +23,31 @@ const Header = styled.div`
   }
 `;
 
+const IsLogingState = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+
+  &.on {
+    background-color: green;
+  }
+
+  &.off {
+    background-color: red;
+  }
+`;
+
 function App() {
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLogin(true);
+      }
+    });
+  }, []);
+
   return (
     <BrowserRouter>
       <div>
@@ -35,6 +63,8 @@ function App() {
               <Link to="/signin">join us</Link>
             </li>
           </ul>
+          <IsLogingState className={isLogin ? 'on' : 'off'} />
+          <p>{isLogin ? '로그인중' : '로그인중 아님'}</p>
         </Header>
 
         <Routes>
