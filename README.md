@@ -100,6 +100,12 @@ signInWithEmailAndPassword(auth, email, password)
 firestore Database와 Realtime Database의 사용가능한 레퍼런스입니다.
 구분을 확실하게 한 후 각 목적에 맞는 레퍼런스 값을 잘 찾아야합니다.
 
+firebase database의 기능을 불러오는 import는 아래입니다.
+
+```
+import { getFirestore } from 'firebase/firestore'; // firesotore Database
+```
+
 ### 데이터 등록
 
 저같은 경우 입력된 데이터의 값은 useRef를 활용하여 value값을 받아왔습니다.
