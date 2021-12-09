@@ -8,6 +8,8 @@ import { auth } from './firebase';
 import Home from './pages/Home';
 import LoginForm from './pages/LoginForm';
 import SiginForm from './pages/SigninForm';
+import List from './pages/List';
+import Write from './pages/Write';
 
 const Header = styled.div`
   margin: 10px 0;
@@ -18,6 +20,7 @@ const Header = styled.div`
       margin-right: 10px;
       > a {
         color: #333;
+        text-decoration: none;
       }
     }
   }
@@ -79,7 +82,12 @@ function App() {
                 </li>
               </>
             ) : (
-              <li onClick={onSignOut}>log out</li>
+              <>
+                <li onClick={onSignOut}>log out</li>
+                <li>
+                  <Link to="/list">notice</Link>
+                </li>
+              </>
             )}
           </ul>
           <IsLogingState className={isLogin ? 'on' : 'off'} />
@@ -94,7 +102,10 @@ function App() {
               <Route path="/signin" element={<SiginForm />} />
             </>
           ) : (
-            <></>
+            <>
+              <Route path="/list" element={<List />} />
+              <Route path="/write" element={<Write />} />
+            </>
           )}
 
           <Route path="*" element={<div>존재하지 않는 페이지입니다.</div>} />
