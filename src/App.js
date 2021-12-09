@@ -39,11 +39,14 @@ const IsLogingState = styled.div`
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
+  const [displayName, setDisplayName] = useState(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsLogin(true);
+        console.log(user.displayName);
+        setDisplayName(user.displayName);
       }
     });
   }, []);
@@ -80,7 +83,7 @@ function App() {
             )}
           </ul>
           <IsLogingState className={isLogin ? 'on' : 'off'} />
-          <p>{isLogin ? '로그인중' : '로그인중 아님'}</p>
+          <p>{isLogin ? `${displayName}님 로그인중` : '로그인중 아님'}</p>
         </Header>
 
         <Routes>
