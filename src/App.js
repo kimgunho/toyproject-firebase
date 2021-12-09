@@ -85,8 +85,15 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/signin" element={<SiginForm />} />
+          {!isLogin ? (
+            <>
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/signin" element={<SiginForm />} />
+            </>
+          ) : (
+            <></>
+          )}
+
           <Route path="*" element={<div>존재하지 않는 페이지입니다.</div>} />
         </Routes>
       </div>
