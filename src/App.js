@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, BrowserRouter, Routes, Route } from 'react-router-dom';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 import { auth } from './firebase';
 
@@ -48,6 +48,16 @@ function App() {
     });
   }, []);
 
+  const onSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        setIsLogin(false);
+        console.log('로그아웃');
+      })
+      .catch((error) => {
+        console.log(error.code);
+      });
+  };
   return (
     <BrowserRouter>
       <div>
@@ -56,12 +66,18 @@ function App() {
             <li>
               <Link to="/">home</Link>
             </li>
-            <li>
-              <Link to="/login">login</Link>
-            </li>
-            <li>
-              <Link to="/signin">join us</Link>
-            </li>
+            {!isLogin ? (
+              <>
+                <li>
+                  <Link to="/login">login</Link>
+                </li>
+                <li>
+                  <Link to="/signin">join us</Link>
+                </li>
+              </>
+            ) : (
+              <li onClick={onSignOut}>log out</li>
+            )}
           </ul>
           <IsLogingState className={isLogin ? 'on' : 'off'} />
           <p>{isLogin ? '로그인중' : '로그인중 아님'}</p>
