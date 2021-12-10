@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+// import { ref } from 'firebase/storage';
+// import { v4 as uuidv4 } from 'uuid';
 
 import { auth } from '../firebase';
 
@@ -9,6 +11,7 @@ function Signin() {
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
+  // const [file, setFile] = useState('');
 
   const navigate = useNavigate();
   const onSubmit = (event) => {
@@ -63,6 +66,23 @@ function Signin() {
     }
   };
 
+  // const onFileChange = (event) => {
+  //   const {
+  //     target: { files, value },
+  //   } = event;
+  //   const theFile = files[0];
+  //   const reader = new FileReader();
+  //   setFile(value);
+  //   reader.onloadend = (finishedEvent) => {
+  //     const {
+  //       currentTarget: { result },
+  //     } = finishedEvent;
+  //   };
+  //   reader.readAsDataURL(theFile);
+
+  //   setFile();
+  // };
+
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -74,6 +94,7 @@ function Signin() {
           onChange={onChange}
           required
         />
+        <br />
         <input
           autoComplete="on"
           defaultValue={password}
@@ -83,6 +104,7 @@ function Signin() {
           onChange={onChange}
           required
         />
+        <br />
         <input
           autoComplete="on"
           defaultValue={checkPassword}
@@ -92,6 +114,7 @@ function Signin() {
           onChange={onChange}
           required
         />
+        <br />
         <input
           name="displayName"
           defaultValue={displayName}
@@ -100,6 +123,14 @@ function Signin() {
           onChange={onChange}
           required
         />
+        <br />
+        {/* <input
+          type="file"
+          accept="image/*"
+          onChange={onFileChange}
+          value={file}
+        /> */}
+
         <input type="submit" value="가입하기" />
       </form>
     </div>
