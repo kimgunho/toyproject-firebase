@@ -116,8 +116,10 @@ onchange를 활용하여 한번에 값을 받아오는 방법도 존재하며
 아래 코드를 확인해봅시다.
 
 ```
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore'; // 만약 doc의 id값을 자동으로 해도 된다면 <-
+import { doc, setDoc } from 'firebase/firestore'; // id값을 내가 생성하길 바란다면 <-
 
+// use addDoc
 try {
     await addDoc(collection(database, 'list'), { // 넣고싶은 데이터의 값을 json의 형태로 넣어줍니다.
     title: title.current.value,
@@ -133,10 +135,63 @@ try {
 } catch (error) {
     console.log(error.code);
 }
+
+// use setDoc
+const id = auth.currentUser.uid.substring(0, 8) + new Date().getTime(); // id값 생성 굳이 이렇게 안만들어주어도 uuid를 사용해도 편하게 가능
+await setDoc(doc(database, 'list', id), {
+    ...data
+}
+
 ```
 
 ### 데이터 읽기
 
-### 데이터 보기
+초기에는 리스트의 데이터들중 find()함수를 이용하여 원하는 결과값이 포함된 데이터를 불러오도록 하였으나
+firebase에서 제공해주는 get data once의 레퍼런스를 확인해보았습니다.
+
+해당 레퍼런스에는 데이터를 읽는 방법중 게시판의 리스트에 적합한 형태와 디테일페이지에 적합한 형태가 확인되었습니다.
+순차대로 기록해보겠습니다.
+
+1. 리스트 형식으로 구조 읽기
+   import { collection, getDocs } from 'firebase/firestore';
+   을 사용하여 데이터를 읽어옵니다.
+
+좀더 디테일한 코드를 보며 확인해봅시다.
+
+```
+  const [list, setList] = useState([]); // 배열 생성
+  useEffect(() => {
+    getCollection();
+  }, []);
+
+  const getCollection = async () => {
+    // 이부분 부터 헷갈릴수 있으나 자세히 봅시다.
+    const querySnapshot = await getDocs(collection(database, 'list'));  // 콜렉션 데이터의 리스트폴더
+    querySnapshot.forEach((data) => {
+      return setList((prev) => [...prev, data.data()]); // 데이터를 순환하며 각 데이터의 값을 배열에 넣어주었습니다.
+    });
+  };
+```
+
+위 방식은 콜렉션의 특정 폴더안에 데이터를 전체적으로 순환을 돌며 배열안에 푸시한 방식입니다.
+
+하지만 여러 데이터가 아닌 특정목적에 맞는 하나의 데이터 객체를 불러오는 방식은 아래와 같습니다. 2. 디테일 형식으로 데이터 읽기
+
+디테일형식은 라우터의 서브:id를 활용하여 진행하였습니다.
+useParams 함수를 사용하여 디테일내 페이지 detail/:id 값을 통하여
+해당 sub id값과 데이터의 id와 비교하여 같은 값을 찾아주는
+방식으로 진행했습니다.
+
+코드를 확인해보겠습니다.
+
+```
+  const getDetail = async () => {
+    const docRef = doc(database, 'list', item.id); // 리스트폴더에서 item.id값이 useParams를 통하여 알아낸 값
+    const docSnap = await getDoc(docRef); // docSnap은 docRef이며 해당 데이터를 아래에서 셋해주었습니다.
+    setDetail(docSnap.data());
+  };
+
+  // 이제 detail데이터는 특정 객체의 값이므로 해당 데이터를 랜더링 합니다.
+```
 
 스터디 참고 영상 : [PedroTech-CRUD Tutorial Using React + Firebase | Firebase 9 and Firestore Tutorial](https://youtu.be/jCY6DH8F4oc)
