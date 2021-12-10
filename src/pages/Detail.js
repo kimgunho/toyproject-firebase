@@ -13,13 +13,21 @@ function Detail() {
   }, []);
 
   const getDetail = async () => {
-    const docRef = doc(database, 'list', 'Sy8tJjUNOzYB0h7xI9zj');
+    const docRef = doc(database, 'list', item.id);
     const docSnap = await getDoc(docRef);
     setDetail(docSnap.data());
   };
 
-  console.log(item.id);
-  return <div>{detail?.title}</div>;
+  return (
+    <div>
+      {detail?.title} <br />
+      {detail?.descripion} <br />
+      {detail?.date} <br />
+      {detail?.like} <br />
+      {detail?.name} <br />
+      {detail?.text} <br />
+    </div>
+  );
 }
 
 export default Detail;

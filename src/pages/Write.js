@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router';
-import { collection, addDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 
 import { database, auth } from '../firebase';
 import Button from '../components/Button';
@@ -12,7 +12,7 @@ function List() {
     event.preventDefault();
     try {
       const id = auth.currentUser.uid.substring(0, 8) + new Date().getTime();
-      await addDoc(collection(database, 'list'), {
+      await setDoc(doc(database, 'list', id), {
         title: title.current.value,
         description: description.current.value,
         text: text.current.value,
