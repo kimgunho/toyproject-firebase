@@ -21,7 +21,7 @@ function Detail() {
   return (
     <div>
       {detail?.title} <br />
-      {detail?.descripion} <br />
+      {detail?.description} <br />
       {detail?.date} <br />
       {detail?.like} <br />
       {detail?.name} <br />
