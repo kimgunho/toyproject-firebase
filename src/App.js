@@ -53,7 +53,7 @@ function App() {
         setDisplayName(user.displayName);
       }
     });
-  }, []);
+  }, [auth.currentUser]); // err
 
   const onSignOut = () => {
     signOut(auth)

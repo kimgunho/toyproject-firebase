@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 import { auth } from '../firebase';
@@ -9,6 +10,7 @@ function Signin() {
   const [checkPassword, setCheckPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
 
+  const navigate = useNavigate();
   const onSubmit = (event) => {
     event.preventDefault();
     if (password === checkPassword) {
@@ -25,6 +27,7 @@ function Signin() {
             .catch((error) => {
               console.log(error);
             });
+          navigate('/');
         })
         .catch((err) => {
           console.log(err.code);
