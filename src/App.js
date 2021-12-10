@@ -10,6 +10,7 @@ import LoginForm from './pages/LoginForm';
 import SiginForm from './pages/SigninForm';
 import List from './pages/List';
 import Write from './pages/Write';
+import Detail from './pages/Detail';
 
 const Header = styled.div`
   margin: 10px 0;
@@ -105,6 +106,7 @@ function App() {
             <>
               <Route path="/list" element={<List />} />
               <Route path="/write" element={<Write />} />
+              <Route path="/detail/:id" element={<Detail />} />
             </>
           )}
 
