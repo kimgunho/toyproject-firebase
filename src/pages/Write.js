@@ -11,6 +11,7 @@ function List() {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
+      const id = auth.currentUser.uid.substring(0, 8) + new Date().getTime();
       await addDoc(collection(database, 'list'), {
         title: title.current.value,
         description: description.current.value,
@@ -19,10 +20,9 @@ function List() {
         like: 0,
         user: auth.currentUser.uid,
         name: auth.currentUser.displayName,
-      }).then(() => {
-        console.log('등록완료');
-        navigate('/list');
+        id: id,
       });
+      navigate('/list');
     } catch (error) {
       console.log(error.code);
     }
