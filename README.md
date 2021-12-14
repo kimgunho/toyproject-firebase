@@ -1,7 +1,7 @@
 # firebase test practive
 
 기록 : 666 공포 커뮤니티를 진행하며 함께 활용한 firebase 기능을 좀더 소화시키기 위하여 기록을 남깁니다.
-디자인과 검증은 추후처리로 하며 firebase의 기능적인 부분만 기록하기 위한 목적입니다.
+디자인과 가입 및 로그인 검증은 생략하며 firebase의 기능적인 부분만 기록하기 위한 목적입니다.
 
 또한 온라인강의를 찾아가며 해보았지만 국내 강의는 대부분 8버젼 위주였습니다.
 최신버젼인 9버젼의 사용법을 기록해봅시다. 👍
@@ -59,8 +59,6 @@ createUserWithEmailAndPassword(auth, email, password) // email, password은 입�
 });
 ```
 
-### 쇼셜(sns) 가입 [db작업 이후 진행예정]
-
 ### login
 
 가입된 유저의 정보 기반으로 이메일, 비밀번호로 로그인을 합니다.
@@ -91,8 +89,6 @@ signInWithEmailAndPassword(auth, email, password)
     });
 };
 ```
-
-### profile src [db작업 이후 진행 예정]
 
 ## firebase database
 
